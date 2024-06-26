@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/public/css/style.css" type="text/css" media="screen" />
+</head>
+<body class="dark">
+
+{{layout}}
+
+</body>
+</html>

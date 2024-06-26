@@ -1,0 +1,29 @@
+
+<main id="Dashboard">
+    <header class="main-header">
+        <h1>CDA test</h1>
+
+        <nav>
+            <ul>
+                <li>
+                    <a href="/client" class="">Fichier clients</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <nav class="side-nav">
+        <ul>
+            <li><a href="/liste-clients">Liste des clients</a></li>
+            <li><a href="/">Rechercher un client</a></li>
+            <li><a href="/edit/client">Ajouter un client</a></li>
+            <li><a href="/disconnect">Quitter</a></li>
+        </ul>
+    </nav>
+    <section>
+        {{content}}
+    </section>
+    <footer class="main-footer dark">
+
+    </footer>
+</main>
+

@@ -1,0 +1,13 @@
+
+<main>
+    <header class="main-header">
+        <h1>CDA test</h1>
+    </header>
+    <section>
+        {{content}}
+    </section>
+    <footer class="main-footer dark">
+        <h6>Le Mélinaidre 2024</h6>
+    </footer>
+</main>
+

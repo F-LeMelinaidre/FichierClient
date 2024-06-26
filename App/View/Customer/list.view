@@ -1,0 +1,44 @@
+<header class="customers">
+    <h1>Liste des clients</h1>
+</header>
+<table class="customers">
+    <thead>
+    <tr>
+        <th class="identifiant">Identifiant</th>
+        <th class="last-name">Nom</th>
+        <th class="first-name">Prénom</th>
+        <th class="phone">Telephone</th>
+        <th class="address">Adresse</th>
+        <th class="zip">Code Postal</th>
+        <th class="city">Ville</th>
+        <th class="created">Créé le</th>
+        <th class="modified">Modifié le</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($customers as $customer): ?>
+    <tr>
+        <td class="identifiant"><?= $customer->id ?></td>
+        <td class="last-name"><?= $customer->last_name ?></td>
+        <td class="first-name"><?= $customer->first_name ?></td>
+        <td class="phone"><?= $customer->phone ?></td>
+        <td class="address"><?= $customer->address ?></td>
+        <td class="zip"><?= $customer->zip ?></td>
+        <td class="city"><?= $customer->city ?></td>
+        <td class="created"><?= $customer->created ?></td>
+        <td class="modified"><?= $customer->modified ?></td>
+    </tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>
+<?php if($nb_page !== 0): ?>
+<div class="paginator">
+    <ul>
+    <?php for ($page = 1; $page <= $nb_page; $page++): ?>
+        <li class="<?= ($page === $current_page)? 'current_page': 'link' ?>">
+            <?= $page ?>
+        </li>
+    <?php endfor; ?>
+    </ul>
+</div>
+<?php endif; ?>

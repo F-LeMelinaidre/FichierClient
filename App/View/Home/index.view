@@ -1,0 +1,14 @@
+<header>
+    <h1>Bienvenue sur l'application de gestion des clients</h1>
+</header>
+<form id="Connexion" action="/connect" method="post">
+    <div>
+        <label>Identifiant :</label>
+        <input type="text" name="username">
+    </div>
+    <div>
+        <label>Mot de passe :</label>
+        <input type="password" name="password">
+    </div>
+    <button type="submit">Valider</button>
+</form>

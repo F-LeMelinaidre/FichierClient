@@ -1,0 +1,43 @@
+<header>
+    <h1></h1>
+</header>
+<form id="Customer" action="/edit/client" method="post">
+    <div class="last-name">
+        <label for="LastName">Nom :</label>
+        <input id="LastName" type="text" name="last_name">
+    </div>
+    <div class="first-name">
+        <label for="FirstName">Prénom :</label>
+        <input id="FirstName" type="text" name="first_name">
+    </div>
+    <div class="phone">
+        <label for="Phone">Telephone :</label>
+        <input id="Phone" type="text" name="phone">
+    </div>
+    <fieldset class="address">
+        <legend>Adresse :</legend>
+        <div class="street-number">
+            <label for="StreetNumber">N° :</label>
+            <input id="StreetNumber" type="text" name="address[street_number]">
+        </div>
+        <div class="street-type">
+            <label for="StreetType">Type :</label>
+            <input id="StreetType" type="text" name="address[street_type]">
+        </div>
+        <div class="street-name">
+            <label for="StreetName">Nom :</label>
+            <input id="StreetName" type="text" name="address[street_name]">
+        </div>
+        <div class="zip">
+            <label for="Zip">Code postal :</label>
+            <input id="Zip" type="text" name="address[zip]">
+        </div>
+        <div class="city">
+            <label for="City">Ville :</label>
+            <input id="City" type="text" name="address[city]">
+        </div>
+    </fieldset>
+    <div class="btn">
+        <button type="submit">Enregister</button>
+    </div>
+</form>
