@@ -1,10 +1,10 @@
 <header class="customers">
     <h1>Liste des clients</h1>
 </header>
-<table class="customers">
+<table class="customers"  data-url="ajax/customers-paginate" data-paginate="10">
     <thead>
     <tr>
-        <th class="identifiant">Identifiant</th>
+        <th class="id">Identifiant</th>
         <th class="last-name">Nom</th>
         <th class="first-name">Prénom</th>
         <th class="phone">Telephone</th>
@@ -16,29 +16,16 @@
     </tr>
     </thead>
     <tbody>
-    <?php foreach ($customers as $customer): ?>
     <tr>
-        <td class="identifiant"><?= $customer->id ?></td>
-        <td class="last-name"><?= $customer->last_name ?></td>
-        <td class="first-name"><?= $customer->first_name ?></td>
-        <td class="phone"><?= $customer->phone ?></td>
-        <td class="address"><?= $customer->address ?></td>
-        <td class="zip"><?= $customer->zip ?></td>
-        <td class="city"><?= $customer->city ?></td>
-        <td class="created"><?= $customer->created ?></td>
-        <td class="modified"><?= $customer->modified ?></td>
+        <td class="id"></td>
+        <td class="last-name"></td>
+        <td class="first-name"></td>
+        <td class="phone"></td>
+        <td class="address"></td>
+        <td class="zip"></td>
+        <td class="city"></td>
+        <td class="created"></td>
+        <td class="modified"></td>
     </tr>
-    <?php endforeach; ?>
     </tbody>
 </table>
-<?php if($nb_page !== 0): ?>
-<div class="paginator">
-    <ul>
-    <?php for ($page = 1; $page <= $nb_page; $page++): ?>
-        <li class="<?= ($page === $current_page)? 'current_page': 'link' ?>">
-            <?= $page ?>
-        </li>
-    <?php endfor; ?>
-    </ul>
-</div>
-<?php endif; ?>
