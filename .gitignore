@@ -1,0 +1,7 @@
+/.phpunit.result.cache
+/composer.json
+/composer.lock
+/FichierClient.iml
+/phpunit.xml
+/vendor/
+/tests/

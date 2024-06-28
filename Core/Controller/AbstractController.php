@@ -19,38 +19,80 @@ abstract class AbstractController implements ControllerInterface
     }
 
 
+    /**
+     * @return void
+     */
     public function index()
     {
         // TODO: Implement index() method.
     }
 
 
+    /**
+     * @return void
+     */
     public function show()
     {
         // TODO: Implement show() method.
     }
 
 
+    /**
+     * @return void
+     */
     public function create()
     {
         // TODO: Implement create() method.
     }
 
 
+    /**
+     * @return void
+     */
     public function update()
     {
         // TODO: Implement update() method.
     }
 
 
+    /**
+     * @return void
+     */
     public function delete()
     {
         // TODO: Implement delete() method.
     }
 
 
+    /**
+     * @param int $page
+     * @param int $per_page
+     *
+     * @return void
+     */
+    public function paginate(int $page, int $per_page): void {}
+
+
+    /**
+     * @param string $view
+     * @param array  $data
+     *
+     * @return string
+     */
     public function render(string $view, array $data = []): string
     {
         return $this->render->render($view, $data);
+    }
+
+
+    /**
+     * @param string $path
+     * @param        $params
+     *
+     * @return void
+     */
+    public function addJavascript(string $path, $params = []): void
+    {
+        $this->render->addJavascript($path, ...$params);
     }
 }

@@ -8,15 +8,10 @@ use Core\Util\Validation;
 
 class Customer extends AbstractEntity
 {
-    private ?string $last_name = null;
-    private ?string $first_name = null;
-    private ?string $phone = null;
-    private ?string $address = null;
-    private ?string $street_number = null;
-    private ?string $street_type = null;
-    private ?string $street_name = null;
-    private ?string $zip = null;
-    private ?string $city = null;
+    private ?string $last_name;
+    private string $first_name;
+    private string $phone;
+    private Address $address;
 
     /**
      * @param string $last_name
@@ -46,11 +41,6 @@ class Customer extends AbstractEntity
             case 'first_name':
             case 'phone':
             case 'address':
-            case 'street_number':
-            case 'street_type':
-            case 'street_name':
-            case 'zip':
-            case 'city':
                 $item = $this->$item;
                 break;
             default:
@@ -92,93 +82,42 @@ class Customer extends AbstractEntity
         $this->phone = Security::sanitize($phone);
     }
 
-    /**
-     * @param string $street_number
-     *
-     * @return void
-     */
-    public function setStreetNumber(string $street_number): void
-    {
-        $street_number = mb_strtoupper($street_number, 'UTF-8');
-        $this->street_number = Security::sanitize($street_number);
-    }
-
-    /**
-     * @param string $street_type
-     *
-     * @return void
-     */
-    public function setStreetType(string $street_type): void
-    {
-        $street_type = ucwords($street_type);
-        $this->street_type = Security::sanitize($street_type);
-    }
-
-    /**
-     * @param string $street_name
-     *
-     * @return void
-     */
-    public function setStreetName(string $street_name): void
-    {
-        $street_name = ucwords($street_name);
-        $this->street_name = Security::sanitize($street_name);
-    }
-
-    /**
-     * @param string $zip
-     *
-     * @return void
-     */
-    public function setZip(string $zip): void
-    {
-        $this->zip = Security::sanitize($zip);
-    }
-
-    /**
-     * @param string $city
-     *
-     * @return void
-     */
-    public function setCity(string $city): void
-    {
-        $city = ucwords($city);
-        $this->city = Security::sanitize($city);
-    }
 
     /**
      * @param array $address
      *
      * @return void
      */
-    private function setAddress(array $address)
+    private function setAddress(array $address): void
     {
-        if (!empty($address['street_number'])) $this->setStreetNumber($address['street_number']);
-        if (!empty($address['street_type'])) $this->setStreetType($address['street_type']);
-        if (!empty($address['street_name'])) $this->setStreetName($address['street_name']);
-        if (!empty($address['zip'])) $this->setZip($address['zip']);
-        if (!empty($address['city'])) $this->setCity($address['city']);
-
-        $this->address = $this->street_number . " " . $this->street_type . " " . $this->street_name;
+        $this->address = new Address($address);
     }
+
 
     public function toArray(): array
     {
         return [
             'id'         => $this->id,
+            'created'    => $this->created,
+            'modified'   => $this->modified,
             'last_name'  => $this->last_name,
             'first_name' => $this->first_name,
             'phone'      => $this->phone,
-            'address'    => [
-                'street_number' => $this->street_number,
-                'street_type'   => $this->street_type,
-                'street_name'   => $this->street_name,
-                'zip'           => $this->zip,
-                'city'          => $this->city
-            ],
-            'created'    => $this->created,
-            'modified'   => $this->modified
+            'address'    => $this->address->toArray()
         ];
+    }
+
+    public function toJson(): string
+    {
+        return json_encode([
+            'id'         => $this->id,
+            'created'    => $this->created,
+            'modified'   => $this->modified,
+            'last_name'  => $this->last_name,
+            'first_name' => $this->first_name,
+            'phone'      => $this->phone,
+            'address'    => $this->address->toArray()
+        ]);
     }
 
     protected function rule(): array
@@ -187,12 +126,7 @@ class Customer extends AbstractEntity
             'id'            => [Validation::REQUIRED],
             'last_name'     => [Validation::REQUIRED, Validation::ALPHA],
             'first_name'    => [Validation::REQUIRED, Validation::ALPHA],
-            'phone'         => [Validation::REQUIRED, Validation::NUMERIC],
-            'street_number' => [Validation::REQUIRED, Validation::STREET_NUMBER],
-            'street_type'   => [Validation::REQUIRED, Validation::ALPHA],
-            'street_name'   => [Validation::REQUIRED, Validation::ALPHA_NUMERIC],
-            'zip'           => [Validation::REQUIRED, Validation::NUMERIC],
-            'city'          => [Validation::REQUIRED, Validation::ALPHA]
+            'phone'         => [Validation::REQUIRED, Validation::NUMERIC]
         ];
     }
 }
