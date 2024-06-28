@@ -4,10 +4,37 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="/public/css/style.css" type="text/css" media="screen" />
+    <script src="/public/js/jquery-3.7.1.js"></script>
+
+    <?php if(isset($script_tags['head'])):
+        foreach($script_tags['head'] as $js):
+            $js = implode(' ', $js); ?>
+
+            <script <?= $js ?>></script>
+
+        <?php endforeach;
+    endif; ?>
+
 </head>
 <body class="dark">
 
 {{layout}}
 
+<?php
+if(isset($script_tags['footer'])):
+    foreach($script_tags['footer'] as $js):
+        $js = implode(' ', $js);
+        ?>
+        <script <?= $js ?>></script>
+    <?php
+    endforeach;
+endif;
+
+if(isset($script_block)){
+    foreach($script_block as $script){
+        echo $script;
+    }
+}
+?>
 </body>
 </html>

@@ -17,6 +17,8 @@ class Render
     private string $view_path;
     private string $view;
 
+    private array $js_script_tags = ['head' => [], 'footer' => []];
+
 
     /**
      * @param string $root        racine de l'application
@@ -46,11 +48,57 @@ class Render
 
         $layout = $this->renderLayout($content_view, $data);
 
+        if(!empty($this->js_script_tags)) $script_tags = $this->js_script_tags;
+        if(!empty($this->script_block)) $script_block = $this->script_block;
+
         ob_start();
         include_once($this->path . $this->base);
         $view = ob_get_clean();
 
         return str_replace('{{layout}}', $layout, $view);
+    }
+
+
+    /**
+     * @param string $path
+     * @param array  $params
+     *
+     * @return void
+     */
+    public function addJavascript(string $path, $module = false, $defer = false, $async = false, $head = false): void
+    {
+
+        if(!str_starts_with($path,'https://') && !str_starts_with($path,'/public/')) {
+            $path = '/public/'.$path;
+        }
+
+        $id = ($head) ? "head" : "footer";
+
+        if($module) $js[] = 'type="module"';
+
+        $js[] = "src=\"$path\"";
+
+        if($defer) $js[] = "defer";
+        if($async) $js[] = "async";
+
+        array_push($this->js_script_tags[$id],$js);
+    }
+
+
+    /**
+     * @param string $script
+     *
+     * @return void
+     */
+    public function addScriptBlock(string $script): void
+    {
+        $block = <<<SCRIPT
+                    <script>
+                        $script
+                    </script>
+                SCRIPT;
+
+        array_push($this->script_block,$block);
     }
 
 

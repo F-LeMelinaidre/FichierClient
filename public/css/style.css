@@ -408,11 +408,11 @@ form#Customer .city {
     transition: background-color 0.3s ease-in-out;
     cursor: pointer;
 }
-.paginator .current_page {
+.paginator .active {
     background-color: var(--sm-warning);
     cursor: no-drop;
 }
-.paginator .link:hover {
+.paginator li:hover:not(.active) {
     background-color: var(--sm-primary);
 }
 

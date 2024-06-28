@@ -76,27 +76,23 @@ class DataFileHandler
     /**
      * @param string $name
      *
-     * @return array
+     * @return string
      */
-    private function loadFileData(string $name): array
+    private function loadFileData(string $name): string
     {
-        $data = [];
-        try {
-            if (!isset($this->files[$name])) throw new InvalidArgumentException("Erreur : le fichier $name n'existe pas.");
+        $json = '';
+        if (isset($this->files[$name])) {
+            try {
 
-            $json = file_get_contents($this->files[$name]);
-            if ($json === false) throw new RuntimeException("Erreur lors de la lecture du fichier $name.");
-
-            $data = json_decode($json, true);
-
-            if (json_last_error() !== JSON_ERROR_NONE) throw new InvalidArgumentException("Erreur de décodage JSON du fichier $name.");
+                $json = file_get_contents($this->files[$name]);
+                if ($json === false) throw new RuntimeException("Erreur lors de la lecture du fichier $name.");
 
 
-
-        } catch (InvalidArgumentException|RuntimeException|Exception $e) {
-            echo $e->getMessage();
+            } catch (RuntimeException $e) {
+                echo $e->getMessage();
+            }
         }
-        return $data;
+        return $json;
     }
 
 
@@ -116,18 +112,15 @@ class DataFileHandler
         $stored_data = $this->getAll($name);
 
         try {
-            if (!is_array($data)) throw new InvalidArgumentException('Les données doivent être un tableau PHP.');
 
-            $stored_data[] = $data;
+            $stored_data = substr($stored_data, 0, -1) . ',' . $json . ']';
 
-            $jsonData = json_encode($stored_data, JSON_PRETTY_PRINT);
-            if ($jsonData === false) throw new RuntimeException('Erreur lors de l\'encodage.');
 
-            if (!file_put_contents($this->files[$name], $jsonData)) throw new RuntimeException('Erreur lors de l\'enregistrement du fichier.');
+            if (!file_put_contents($this->files[$name], $stored_data)) throw new RuntimeException('Erreur lors de l\'enregistrement du fichier.');
 
             $result = true;
 
-        } catch (InvalidArgumentException|RuntimeException $e) {
+        } catch (Exception $e) {
             echo $e->getMessage();
         }
 
@@ -139,27 +132,9 @@ class DataFileHandler
      *
      * @return mixed
      */
-    public function getAll(string $name): array
+    public function getAll(string $name): string
     {
         return $this->loadFileData($name);
-    }
-
-    public function getPaginateData(string $name, int $current_page, int $nb_data_page): array
-    {
-        $data = $this->loadFileData($name);
-
-        $start = ($current_page - 1) * $nb_data_page;
-
-        $page_data = array_slice($data, $start, $nb_data_page);
-
-        $nb_page = ceil(count($data) / $nb_data_page);
-
-        return [
-            'current_page' => $current_page,
-            'nb_page' => $nb_page,
-            'data' => $page_data,
-        ];
-
     }
 
 }

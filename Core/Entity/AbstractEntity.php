@@ -20,7 +20,7 @@ abstract class AbstractEntity
     /**
      * @param array $data
      */
-    public function __construct(array $data)
+    public function __construct(array $data = [])
     {
         $id = (isset($data['id'])) ? $data['id'] : IdGenerator::getId('int', ['length' => 11]);
         $this->setId($id);

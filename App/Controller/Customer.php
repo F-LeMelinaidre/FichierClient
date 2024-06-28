@@ -27,16 +27,10 @@ class Customer extends AbstractController
 
     public function list()
     {
-        $data_paginate = $this->data_handler->getPaginateData('customer',1, 10);
-        $customers = $data_paginate['data'];
-        $current_page = $data_paginate['current_page'];
-        $nb_page = $data_paginate['nb_page'];
 
-        foreach ($customers as &$customer) {
-            $customer = new CustomerEntity($customer);
-        }
+        $this->addJavascript('js/pagination.js');
 
-        return $this->render('dashboard@list', compact('customers', 'current_page', 'nb_page'));
+        return $this->render('dashboard@list');
     }
 
     public function edit($id = null)
@@ -47,7 +41,7 @@ class Customer extends AbstractController
 
             $data = [
                 'name' => 'customer',
-                'data' => $customer->toArray()
+                'data' => $customer->toJson()
             ];
 
             if($customer->validate() && $this->data_handler->save(...$data)) {
@@ -56,5 +50,28 @@ class Customer extends AbstractController
         }
 
         return $this->render('dashboard@edit');
+    }
+
+    public function paginate(int $page, int $per_page): void
+    {
+        header('Content-Type: application/json');
+        $data = json_decode($this->data_handler->getAll('customer'), true);
+
+        $nb_page = ceil(count($data) / $per_page);
+        $start = ($page - 1) * $per_page;
+        $data = array_slice($data, $start, $per_page);
+
+        foreach ($data as $k => $customer) {
+            $customer = new CustomerEntity($customer);
+            $data[$k] = $customer->toArray();
+            $data[$k]['address'] = $customer->address->getFullAddress();
+            $data[$k]['zip'] = $customer->address->zip;
+            $data[$k]['city'] = $customer->address->city;
+        }
+
+        echo json_encode([
+            'data' => $data,
+            'nb_page' => $nb_page
+            ]);
     }
 }
