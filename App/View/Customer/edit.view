@@ -20,6 +20,11 @@
                aria-required="true"
                data-validation="alpha">
     </div>
+    <?php  if (isset($action) && $action === 'editer'): ?>
+    <div class="id">
+        Identifiant : <span></span>
+    </div>
+    <?php endif; ?>
     <div class="phone">
         <label for="Phone">Telephone :</label>
         <input id="Phone" class="js-validation" type="text" name="phone"
@@ -60,6 +65,8 @@
         </div>
     </fieldset>
     <div class="btn">
+        <input id="Id" type="hidden" name="id" value="">
+        <input id="Created" type="hidden" name="created" value="">
         <button type="submit" class="js-submit-button"><?= (isset($action) && $action === 'editer')? 'Modifier' : 'Enregister' ?></button>
     </div>
 </form>

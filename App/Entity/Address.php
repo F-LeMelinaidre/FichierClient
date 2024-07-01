@@ -129,19 +129,6 @@ class Address extends AbstractEntity
         ];
     }
 
-    public function toJson(): string
-    {
-        $data = [
-            'street_number' => $this->street_number,
-            'street_type'   => $this->street_type,
-            'street_name'   => $this->street_name,
-            'zip'           => $this->zip,
-            'city'          => $this->city
-        ];
-
-        return json_encode($data);
-    }
-
     /**
      * Tableau des règles de validation des propriétes de class
      * utilisées par la methode validation dans AbstractEntity

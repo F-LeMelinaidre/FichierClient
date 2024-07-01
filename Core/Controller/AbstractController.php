@@ -18,6 +18,21 @@ abstract class AbstractController implements ControllerInterface
         $this->render = new Render($class_name);
     }
 
+    public function isConnected(): bool
+    {
+        $connected = false;
+        $users = json_decode($this->data_handler->getAll('user'), true);
+
+        if(isset($_SESSION['user'])) {
+            $username = $_SESSION['user'];
+            $user_find = array_filter($users, function ($u) use ($username) {
+                return $u['username'] == $username;
+            });
+            $connected = !empty($user_find);
+        }
+
+        return $connected;
+    }
 
     /**
      * @return void

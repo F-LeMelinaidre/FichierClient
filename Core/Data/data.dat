@@ -3,30 +3,30 @@
         "id": 17194133148,
         "created": "24-06-2024 15:30",
         "modified": "",
-        "last_name": "Petit",
+        "last_name": "Truc",
         "first_name": "Julien",
         "phone": "0623242526",
         "address": {
-            "street_number": "8 ",
+            "street_number": "8",
             "street_type": "Rue",
-            "street_name": "des Carmes",
-            "city": "Nantes",
-            "zip": "44000"
+            "street_name": "Des Carmes",
+            "zip": "44000",
+            "city": "Nantes"
         }
     },
     {
         "id": 17194133232,
         "created": "24-06-2024 15:30",
-        "modified": "",
+        "modified": "01-07-2024 10:14",
         "last_name": "Moreau",
         "first_name": "Camille",
         "phone": "0627282930",
         "address": {
             "street_number": "14",
             "street_type": "Rue",
-            "street_name": "de Strasbourg",
-            "city": "Bordeaux",
-            "zip": "33000"
+            "street_name": "De Strasbourg",
+            "zip": "33000",
+            "city": "Bordeaux"
         }
     },
     {

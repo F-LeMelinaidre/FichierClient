@@ -37,6 +37,8 @@ class CardCustomer {
         $('#Customer #StreetName').val(`${this.#item.address.street_name}`);
         $('#Customer #Zip').val(`${this.#item.zip}`);
         $('#Customer #City').val(`${this.#item.city}`);
+        $('#Id').val(`${this.#item.id}`);
+        $('#Created').val(`${this.#item.created}`);
     }
 
 

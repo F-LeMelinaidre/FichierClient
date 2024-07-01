@@ -107,19 +107,6 @@ class Customer extends AbstractEntity
         ];
     }
 
-    public function toJson(): string
-    {
-        return json_encode([
-            'id'         => $this->id,
-            'created'    => $this->created,
-            'modified'   => $this->modified,
-            'last_name'  => $this->last_name,
-            'first_name' => $this->first_name,
-            'phone'      => $this->phone,
-            'address'    => $this->address->toArray()
-        ]);
-    }
-
     protected function rule(): array
     {
         return [

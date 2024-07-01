@@ -1,4 +1,10 @@
-{
-  "utilisateur1": "$2y$10$S9DmlbAK9Ph2wD.kxtQ2tO.2g9mCf/7MB6mUkxDs14D16GZI/tAei",
-  "utilisateur2": "$2y$10$1Z75MZv0yNpkY3k7EiJhLu5dI4bwN4OJhS0sBjsO/0yGvDCdPjF9K"
-}
+[
+  {
+    "username": "utilisateur1",
+    "password": "$2y$10$E/hwmWHMsMomjuP.DjvQBOz9rfYlVZ8y/invGqG04LpNILhiley0m"
+  },
+  {
+    "username": "utilisateur2",
+    "password": "$2y$10$aDtE35ZQbzlTcGPYSu7DWuUeMkKmsBUlO/PKkkuS8W61ubzSKWfdm"
+  }
+]

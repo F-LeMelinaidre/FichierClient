@@ -22,7 +22,7 @@ abstract class AbstractEntity
      */
     public function __construct(array $data = [])
     {
-        $id = (isset($data['id'])) ? $data['id'] : IdGenerator::getId('int', ['length' => 11]);
+        $id = (isset($data['id'])) ? intval($data['id']) : IdGenerator::getId('int', ['length' => 11]);
         $this->setId($id);
 
         if (isset($data['created'])) $this->setCreated($data['created']);
