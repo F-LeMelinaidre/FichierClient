@@ -2,6 +2,7 @@
  * {$user_name}
  * {$class}
  * Copyright (c) 2024.
+ * TODO Rendre compatible avec apiRequest
  */
 
 const PARAMS = {

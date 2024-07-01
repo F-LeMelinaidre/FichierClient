@@ -1,43 +1,65 @@
 <header>
-    <h1></h1>
+    <h1><?= $title ?></h1>
 </header>
-<form id="Customer" action="/edit/client" method="post">
+<div id="Search" class="<?= (isset($action) && $action === 'editer')? '' : 'hidden' ?>">
+    <label for="Search-Edit">Recherche par :</label>
+    <div>
+        <input id="Search-Edit" type="text" name="customer" placeholder="nom et/ou prénom" data-search='{"end_point": "ajax.customers.list", "items": ["last_name","first_name"]}'>
+    </div>
+</div>
+<form id="Customer" class="edit js-form <?= (isset($action) && $action === 'editer')? 'hidden' : '' ?>" action="<?= $url ?>" method="post">
     <div class="last-name">
         <label for="LastName">Nom :</label>
-        <input id="LastName" type="text" name="last_name">
+        <input id="LastName" class="js-validation" type="text" name="last_name"
+               aria-required="true"
+               data-validation="alpha">
     </div>
     <div class="first-name">
         <label for="FirstName">Prénom :</label>
-        <input id="FirstName" type="text" name="first_name">
+        <input id="FirstName" class="js-validation" type="text" name="first_name"
+               aria-required="true"
+               data-validation="alpha">
     </div>
     <div class="phone">
         <label for="Phone">Telephone :</label>
-        <input id="Phone" type="text" name="phone">
+        <input id="Phone" class="js-validation" type="text" name="phone"
+               aria-required="true"
+               data-validation="numeric">
     </div>
     <fieldset class="address">
         <legend>Adresse :</legend>
         <div class="street-number">
             <label for="StreetNumber">N° :</label>
-            <input id="StreetNumber" type="text" name="address[street_number]">
+            <input id="StreetNumber" class="js-validation" type="text" name="address[street_number]"
+                   aria-required="true"
+                   data-validation="streetNumber">
         </div>
         <div class="street-type">
             <label for="StreetType">Type :</label>
-            <input id="StreetType" type="text" name="address[street_type]">
+            <input id="StreetType" class="js-validation" type="text" name="address[street_type]"
+                   aria-required="true"
+                   data-validation="alpha">
         </div>
         <div class="street-name">
             <label for="StreetName">Nom :</label>
-            <input id="StreetName" type="text" name="address[street_name]">
+            <input id="StreetName" class="js-validation" type="text" name="address[street_name]"
+                   aria-required="true"
+                   data-validation="alphaNumeric">
         </div>
         <div class="zip">
             <label for="Zip">Code postal :</label>
-            <input id="Zip" type="text" name="address[zip]">
+            <input id="Zip" class="js-validation" type="text" name="address[zip]"
+                   aria-required="true"
+                   data-validation="numeric">
         </div>
         <div class="city">
             <label for="City">Ville :</label>
-            <input id="City" type="text" name="address[city]">
+            <input id="City" class="js-validation" type="text" name="address[city]"
+                   aria-required="true"
+                   data-validation="alpha">
         </div>
     </fieldset>
     <div class="btn">
-        <button type="submit">Enregister</button>
+        <button type="submit" class="js-submit-button"><?= (isset($action) && $action === 'editer')? 'Modifier' : 'Enregister' ?></button>
     </div>
 </form>

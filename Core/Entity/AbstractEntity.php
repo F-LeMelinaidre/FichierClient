@@ -90,8 +90,6 @@ abstract class AbstractEntity
         foreach ($this->rule() as $field => $rules) {
             $value = $this->$field;
 
-            echo $field . ' - ' . $value . '<br>';
-
             foreach ($rules as $rule) {
                 $rule_name = $rule;
 

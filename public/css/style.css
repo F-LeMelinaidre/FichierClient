@@ -15,6 +15,7 @@
     --sm-primary-bg-hover: #2d6388;
     --sm-warning: #d3a200;
     --sm-danger: #c82b2b;
+    --sm-sucess: #1c6e00;
     --sm-dark: #191e23;
     --sm-gray-10: #e1e1e1;
     --sm-gray-20: #c8c8c8;
@@ -48,7 +49,11 @@ h1, h2 {
     font-weight: 400;
 }
 
-nav ul {
+address {
+    font-style: normal;
+}
+
+ul {
     list-style: none;
 }
 
@@ -71,7 +76,10 @@ a.exit {
     color: var(--sm-danger);
 }
 
-
+.hidden {
+    position: absolute!important;
+    visibility: hidden;
+}
 /* --- Layout --- */
 
 main {
@@ -92,8 +100,52 @@ main#Dashboard {
     grid-template-rows: min-content 1fr min-content;
     height: 100vh;
 }
+.bg-success {
+    background-color: var(--sm-sucess);
+}
+.bg-danger {
+    background-color: var(--sm-danger);
+}
+.bg-warning {
+    background-color: var(--sm-warning);
+}
+.bg-info-subtle {
+    background-color: var(--sm-primary-emphasis);
+}
 
 
+input.valid {
+    border-color: var(--sm-sucess);
+    box-shadow: var(--sm-sucess);
+}
+
+textarea.invalid,
+input.invalid {
+    border-color: var(--sm-warning);
+}
+.invalid-message.invalid {
+    color: var(--sm-warning);
+}
+
+textarea.error,
+input.error {
+    border-color: var(--sm-danger);
+}
+
+/* --- Message --- */
+.invalid-message.error {
+    color: var(--sm-danger);
+}
+
+#MessageFlash {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 30px;
+    color: white;
+}
 /* --- Header Layout --- */
 
 .main-header {
@@ -130,6 +182,8 @@ main>section {
 
     display: flex;
     flex-direction: column;
+    align-items: center;
+    gap: 1.6rem;
 
     max-width: 950px;
     width: 100%;
@@ -138,7 +192,8 @@ main>section {
 }
 
 section>header {
-    margin-bottom: 3.2rem;
+    height: min-content;
+    margin: 1.6rem 0 0.8rem 0;
 
     text-align: center;
 }
@@ -150,9 +205,6 @@ header.customers {
 section>header h1,
 section>header h2 {
     font-weight: 600;
-}
-section>header h1 {
-    margin-bottom: 1.6rem;
 }
 
 section>nav {
@@ -247,7 +299,6 @@ table .city {
 form {
     max-width: 650px;
     width: 100%;
-    margin: auto;
     padding: 0.8rem;
 
     border-radius: 0.4rem;
@@ -277,6 +328,7 @@ input {
     padding: 0.2rem 0.4rem;
     margin-bottom: 0.4rem;
 
+    font-family: "Ubuntu Condensed";
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
@@ -295,7 +347,7 @@ input:focus-visible {
 }
 
 button {
-    padding: 0.2rem 0.8rem;
+    padding: 0.2rem 0.8rem 0.4rem;
 
     color: white;
     font-family: inherit;
@@ -308,6 +360,29 @@ button {
 
     background-color: var(--sm-primary);
     transition: background-color 0.3s ease-in-out;
+}
+
+.autocomplete {
+    position: absolute;
+    bottom: 0;
+    transform: translateY(calc(100% - 0.8rem + 1px));
+
+    display: inline-block;
+    overflow-y: scroll;
+
+    min-width: 120px;
+    max-height: 200px;
+    padding: 0.2rem;
+    background-color: var(--sm-gray-10);
+    box-shadow: rgba(25, 25, 25, 0.25) 0 0.75px 4px;
+}
+.autocomplete li {
+    padding: 0.2rem 0.4rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+.autocomplete li:hover {
+    background-color: var(--sm-primary-emphasis);
 }
 
 button:hover {
@@ -391,6 +466,39 @@ form#Customer .city {
     grid-column: 3/7;
 }
 
+form#Customer .btn {
+    grid-row: 4;
+    align-self: end;
+    justify-self: end;
+    margin-bottom: 0.4rem;
+}
+
+#Search {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    max-width: 650px;
+    width: 100%;
+    padding: 0.8rem;
+
+    border-radius: 0.4rem;
+    background-color: #fcfcfc;
+    box-shadow: rgba(25, 25, 25, 0.25) 0 0.75px 4px;
+}
+#Search label {
+    padding-bottom: 0;
+}
+#Search div {
+    flex: 1;
+}
+#Search input {
+    width: 100%;
+    margin: 0;
+}
+
+
 .paginator ul {
     display: flex;
     flex-direction: row;
@@ -416,6 +524,61 @@ form#Customer .city {
     background-color: var(--sm-primary);
 }
 
+/* --- CARD CLIENT --- */
+
+#Card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    max-width: 650px;
+    width: 100%;
+    padding: 0.8rem;
+
+    font-size: 1.1rem;
+    color: var(--sm-primary);
+
+    border-radius: 0.4rem;
+    background-color: #fcfcfc;
+    box-shadow: rgba(25, 25, 25, 0.25) 0 0.75px 4px;
+}
+#Card header {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-around;
+    padding: 0;
+}
+#Card h2 {
+    font-size: 1.8rem;
+}
+
+#Card header p {
+    font-size: 1.2rem;
+}
+#Card .phone,
+#Card address{
+    width: 75%;
+    margin: auto;
+}
+#Card address {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.4rem;
+}
+
+#Card .address {
+    grid-column: 1/3;
+}
+
+#Card h2,
+#Card span {
+    color: var(--sm-gray-90);
+}
+
+#Card .btn {
+    width: min-content;
+    margin-top: 0.8rem;
+}
 
 .dark main>header,
 .dark main>footer {

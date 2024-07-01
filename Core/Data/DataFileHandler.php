@@ -102,12 +102,14 @@ class DataFileHandler
      *
      * @return bool
      */
-    public function save(string $name, array $data)
+    public function save(string $name, string $json)
     {
         $result = false;
         $date = date('d-m-Y H:i');
         if (isset($data['modified']) && !empty($data['created'])) $data['modified'] = $date;
         if (isset($data['created']) && empty($data['created'])) $data['created'] = $date;
+
+
 
         $stored_data = $this->getAll($name);
 
@@ -120,7 +122,7 @@ class DataFileHandler
 
             $result = true;
 
-        } catch (Exception $e) {
+        } catch (RuntimeException $e) {
             echo $e->getMessage();
         }
 
@@ -135,6 +137,27 @@ class DataFileHandler
     public function getAll(string $name): string
     {
         return $this->loadFileData($name);
+    }
+
+    public function delete(string $name, int $id)
+    {
+        $result = false;
+        $data = json_decode($this->loadFileData($name), true);
+        try {
+            $id = array_search($id, array_column($data, 'id'));
+            if($id === false) throw new RuntimeException('L\'enregistrement n pas ete trouvé.');
+
+            unset($data[$id]);
+
+            if (!file_put_contents($this->files[$name], json_encode($data, JSON_PRETTY_PRINT))) throw new RuntimeException('Erreur lors de l\'enregistrement du fichier.');
+
+            $result = true;
+
+        } catch (RuntimeException) {
+            echo $e->getMessage();
+        }
+
+        return $result;
     }
 
 }
