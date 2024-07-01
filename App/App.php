@@ -6,6 +6,7 @@ namespace App;
 use Core\Data\DataFileHandler;
 use Core\Exception\RouterException;
 use Core\HttpRouter\Router;
+use Core\Util\MessageFlash;
 
 class App
 {
@@ -41,9 +42,9 @@ class App
 
         self::$_Router->get('home', '/',
             [Controller\Home::class, 'index']);
+        self::$_Router->post('home', '/',
+            [Controller\Home::class, 'index']);
 
-        self::$_Router->post('connect', '/connect',
-            [Controller\Home::class, 'connect']);
         self::$_Router->get('disconnect', '/disconnect',
             [Controller\Home::class, 'disconnect']);
 

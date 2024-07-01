@@ -102,23 +102,20 @@ class DataFileHandler
      *
      * @return bool
      */
-    public function save(string $name, string $json)
+    public function save(string $name, array $data)
     {
         $result = false;
         $date = date('d-m-Y H:i');
-        if (isset($data['modified']) && !empty($data['created'])) $data['modified'] = $date;
-        if (isset($data['created']) && empty($data['created'])) $data['created'] = $date;
+        $data['modified'] = $date;
 
 
 
-        $stored_data = $this->getAll($name);
+        $stored_data = json_decode($this->getAll($name), true);
+        $stored_data[] = $data;
 
         try {
 
-            $stored_data = substr($stored_data, 0, -1) . ',' . $json . ']';
-
-
-            if (!file_put_contents($this->files[$name], $stored_data)) throw new RuntimeException('Erreur lors de l\'enregistrement du fichier.');
+            if (!file_put_contents($this->files[$name], json_encode($stored_data,JSON_PRETTY_PRINT))) throw new RuntimeException('Erreur lors de l\'enregistrement du fichier.');
 
             $result = true;
 
@@ -127,6 +124,43 @@ class DataFileHandler
         }
 
         return $result;
+    }
+
+    public function update(string $name, array $data) {
+        $result = false;
+
+        $id = $data['id'];
+
+        $date = date('d-m-Y H:i');
+        $data['modified'] = $date;
+
+        $items = json_decode($this->getAll($name), true);
+
+        $i = 0;
+        $find = false;
+        $nb = count($items)-1;
+        while( $i < $nb && !$find) {
+            if($id === $items[$i]['id']) {
+                $items[$i] = $data;
+                $find = true;
+            }
+            echo $i.' - '.$nb.'<br>';
+            $i++;
+        }
+
+
+        try {
+
+            if (!file_put_contents($this->files[$name], json_encode($items,JSON_PRETTY_PRINT))) throw new RuntimeException('Erreur lors de l\'enregistrement du fichier.');
+
+            $result = true;
+
+        } catch (RuntimeException $e) {
+            echo $e->getMessage();
+        }
+
+        return $result;
+
     }
 
     /**
@@ -142,7 +176,7 @@ class DataFileHandler
     public function delete(string $name, int $id)
     {
         $result = false;
-        $data = json_decode($this->loadFileData($name), true);
+        $data = json_decode($this->getAll($name), true);
         try {
             $id = array_search($id, array_column($data, 'id'));
             if($id === false) throw new RuntimeException('L\'enregistrement n pas ete trouvé.');

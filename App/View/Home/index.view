@@ -1,7 +1,7 @@
 <header>
     <h1>Bienvenue sur l'application de gestion des clients</h1>
 </header>
-<form id="Connexion" action="/connect" method="post">
+<form id="Connexion" action="/" method="post">
     <div>
         <label>Identifiant :</label>
         <input type="text" name="username">

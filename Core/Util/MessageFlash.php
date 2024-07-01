@@ -21,7 +21,7 @@ class MessageFlash {
 
     public static function helper(): mixed
     {
-        $flash = null;
+        $flash = '';
         if (self::hasFlashMessage()) {
 
             switch (self::$type) {
@@ -45,10 +45,9 @@ class MessageFlash {
             }
 
             $flash = self::render($class, self::$message);
-            self::destroy();
         }
 
-
+        self::destroy();
 
         return $flash;
     }
@@ -63,7 +62,7 @@ class MessageFlash {
         return $result;
     }
 
-    private static function destroy()
+    public static function destroy()
     {
         unset($_SESSION['flash']);
     }

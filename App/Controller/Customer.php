@@ -19,6 +19,12 @@ class Customer extends AbstractController
         parent::__construct();
 
         $this->data_handler = App::$_Data;
+
+        if($this->isConnected() === false) {
+            header('Location: /');
+            exit();
+        }
+
     }
 
     public function index()
@@ -48,18 +54,25 @@ class Customer extends AbstractController
     {
         $params = ['title' => 'Ajouter un client', 'url' => '/nouveau/client'];
 
-        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST)) {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST)) {
 
             $customer = new CustomerEntity($_POST);
 
             $data = [
                 'name' => 'customer',
-                'json' => $customer->toJson()
+                'data' => $customer->toArray()
             ];
             if($this->data_handler->save(...$data)) {
-                echo 'enregistré';
-                MessageFlash::create('Client enregistré !',$type = 'success');
+
+                MessageFlash::create('Client enregistré !',$type = 'succes');
+
                 header('Location: /liste-clients');
+                exit();
+            }else {
+                MessageFlash::create('Erreur lors de l\'enregistrement !',$type = 'erreur');
+
+                header('Location: /client');
+                exit();
             }
         }
 
@@ -70,6 +83,27 @@ class Customer extends AbstractController
     public function edit()
     {
         $params = ['action' => 'editer', 'title' => 'Editer un client', 'url' => '/modifier/client'];
+
+
+        if($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST)) {
+            $customer = new CustomerEntity($_POST);
+            $data = [
+                'name' => 'customer',
+                'data' => $customer->toArray()
+            ];
+            if($this->data_handler->update(...$data)) {
+
+                MessageFlash::create('Modifications client effectuées !',$type = 'succes');
+
+                header('Location: /liste-clients');
+                exit();
+            } else {
+                MessageFlash::create('Modifications client échoués !',$type = 'erreur');
+
+                header('Location: /client');
+                exit();
+            }
+        }
         $this->addJavascript('js/Form/FormCustomer.js', ['module' => true]);
         $this->addJavascript('js/Form/InputSearch.js', ['module' => true]);
         return $this->render('dashboard@edit', $params);
