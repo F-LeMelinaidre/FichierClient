@@ -6,7 +6,8 @@ use App\App;
 use App\Entity\Customer as CustomerEntity;
 use Core\Controller\AbstractController;
 use Core\Data\DataFileHandler;
-use Core\Util\IdGenerator;
+use Core\Util\MessageFlash;
+use Core\Util\Security;
 
 class Customer extends AbstractController
 {
@@ -29,25 +30,23 @@ class Customer extends AbstractController
     {
 
         $this->addJavascript('js/pagination.js');
-
         return $this->render('dashboard@list');
     }
 
-    public function search()
+    public function search(string $slug = null)
     {
-        $params = [
-            'title' => 'Fiche client',
-            'action' => 'search'
-        ];
+        $params = (is_null($slug)) ?
+            ['title' => 'Fiche client','action' => 'search'] :
+            ['title' => 'Supprimer une fiche client', 'action' => 'delete'];
 
-        $this->addJavascript('js/InputSearch.js', ['module' => true]);
+        $this->addJavascript('js/Form/InputSearch.js', ['module' => true]);
         $this->addJavascript('js/CardCustomer.js', ['module' => true]);
         return $this->render('dashboard@card', $params);
     }
 
     public function add()
     {
-        $params = ['title' => 'Ajouter un client'];
+        $params = ['title' => 'Ajouter un client', 'url' => '/nouveau/client'];
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST)) {
 
@@ -55,35 +54,25 @@ class Customer extends AbstractController
 
             $data = [
                 'name' => 'customer',
-                'data' => $customer->toJson()
+                'json' => $customer->toJson()
             ];
-
-            if($customer->validate() && $this->data_handler->save(...$data)) {
+            if($this->data_handler->save(...$data)) {
+                echo 'enregistré';
+                MessageFlash::create('Client enregistré !',$type = 'success');
                 header('Location: /liste-clients');
             }
         }
 
+        $this->addJavascript('js/Form/FormValidation.js', ['module' => true]);
         return $this->render('dashboard@edit', $params);
     }
 
     public function edit()
     {
-        $params = ['action' => 'editer', 'title' => 'Editer un client'];
-        $this->addJavascript('js/FormCustomer.js', ['module' => true]);
-        $this->addJavascript('js/InputSearch.js', ['module' => true]);
+        $params = ['action' => 'editer', 'title' => 'Editer un client', 'url' => '/modifier/client'];
+        $this->addJavascript('js/Form/FormCustomer.js', ['module' => true]);
+        $this->addJavascript('js/Form/InputSearch.js', ['module' => true]);
         return $this->render('dashboard@edit', $params);
-    }
-    public function delete($id = null)
-    {
-        $params = [
-            'title' => 'Supprimer une fiche client',
-            'action' => 'delete'
-        ];
-
-        $this->addJavascript('js/InputSearch.js', ['module' => true]);
-        $this->addJavascript('js/CardCustomer.js', ['module' => true]);
-
-        return $this->render('dashboard@card', $params);
     }
 
 
@@ -104,6 +93,21 @@ class Customer extends AbstractController
         echo json_encode($data);
     }
 
+    public function delete()
+    {
+        $id = Security::sanitize($_POST['id']);
+
+        $delete = $this->data_handler->delete('customer', $id);
+
+        if($delete === false) {
+            header('Content-Type: application/json');
+            echo json_encode(['error' => 'Erreur : enregistrement non supprimé !']);
+        } else {
+            MessageFlash::create('Client supprimé !',$type = 'danger');
+        }
+
+
+    }
 
     public function paginate(int $page, int $per_page): void
     {

@@ -39,29 +39,43 @@ class App
         self::$_Data->addFile('.access', 'user');
         self::$_Data->addFile('data.dat', 'customer');
 
-        self::$_Router->get('home', '/', [Controller\Home::class, 'index']);
-        self::$_Router->post('connect', '/connect', [Controller\Home::class, 'connect']);
-        self::$_Router->get('disconnect', '/disconnect', [Controller\Home::class, 'disconnect']);
+        self::$_Router->get('home', '/',
+            [Controller\Home::class, 'index']);
 
-        self::$_Router->get('customer', '/client', [Controller\Customer::class, 'index']);
-        self::$_Router->get('customers_list', '/liste-clients', [Controller\Customer::class, 'list']);
+        self::$_Router->post('connect', '/connect',
+            [Controller\Home::class, 'connect']);
+        self::$_Router->get('disconnect', '/disconnect',
+            [Controller\Home::class, 'disconnect']);
+
+        self::$_Router->get('customer', '/client',
+            [Controller\Customer::class, 'index']);
+        self::$_Router->get('customers_list', '/liste-clients',
+            [Controller\Customer::class, 'list']);
         self::$_Router->get('customers_paginate', '/ajax/customers-paginate/{page}/{per_page}',
             [Controller\Customer::class, 'paginate'],
             ['page'     => '[0-9]+',
              'per_page' => '[0-9]+']);
 
-        self::$_Router->get('customer_search', '/rechercher/client', [Controller\Customer::class, 'search']);
+        self::$_Router->get('customer_search', '/rechercher/client',
+            [Controller\Customer::class, 'search']);
 
-        self::$_Router->get('customer_add', '/nouveau/client', [Controller\Customer::class, 'add']);
+        self::$_Router->get('customer_add', '/nouveau/client',
+            [Controller\Customer::class, 'add']);
+        self::$_Router->post('customer_add', '/nouveau/client',
+            [Controller\Customer::class, 'add']);
 
-        self::$_Router->get('customer_edit', '/modifier/client', [Controller\Customer::class, 'edit']);
-        self::$_Router->post('customer_edit', '/modifier/client/{id}', [Controller\Customer::class,
-                                                                    'edit'], ['id' => '[0-9]+']);
+        self::$_Router->get('customer_edit', '/modifier/client',
+            [Controller\Customer::class, 'edit']);
+        self::$_Router->post('customer_edit', '/modifier/client',
+            [Controller\Customer::class, 'edit']);
 
-        self::$_Router->get('customer_delete', '/supprimer/client', [Controller\Customer::class, 'delete']);
-        self::$_Router->post('customer_delete', '/supprimer/client', [Controller\Customer::class, 'delete']);
+        self::$_Router->get('customer_delete', '/client/{slug}',
+            [Controller\Customer::class, 'search'], ['slug' => 'supprimer']);
+        self::$_Router->post('customer_delete', '/ajax/customer/delete',
+            [Controller\Customer::class, 'delete']);
 
-        self::$_Router->get('customers_all', '/ajax/customers/list', [Controller\Customer::class, 'getAll']);
+        self::$_Router->get('customers_all', '/ajax/customers/list',
+            [Controller\Customer::class, 'getAll']);
 
         try {
             $route = self::$_Router->resolve($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);

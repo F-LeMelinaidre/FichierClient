@@ -1,4 +1,8 @@
+<?php
 
+use Core\Util\MessageFlash;
+
+?>
 <main id="Dashboard">
     <header class="main-header">
         <h1>CDA test</h1>
@@ -17,11 +21,12 @@
             <li><a href="/rechercher/client">Rechercher un client</a></li>
             <li><a href="/nouveau/client">Ajouter un client</a></li>
             <li><a href="/modifier/client">Modifier un client</a></li>
-            <li><a href="/supprimer/client">Supprimer un client</a></li>
+            <li><a href="<?= \App\App::$_Router->getUrl('customer_delete',['slug' => 'supprimer']) ?>">Supprimer un client</a></li>
             <li><a href="/disconnect">Quitter</a></li>
         </ul>
     </nav>
     <section>
+        <?= MessageFlash::helper(); ?>
         {{content}}
     </section>
     <footer class="main-footer dark">

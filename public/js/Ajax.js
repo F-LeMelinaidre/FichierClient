@@ -22,7 +22,7 @@ export class Ajax {
         this.#params = params;
     }
 
-    async loadData()
+    async run()
     {
 
         try {

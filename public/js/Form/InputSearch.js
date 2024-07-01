@@ -2,11 +2,9 @@
  * {$user_name}
  * {$class}
  * Copyright (c) 2024.
- * Effectue pour le moment une recherche dans un Json issu dans fichier chargé dans son intégralité
- * TODO Ajouter le paramétrage et fonctionnalité pour la recherche en bd
  */
 
-import {Ajax} from "./Ajax.js";
+import {Ajax} from "../Ajax.js";
 import {Autocomplete} from "./Autocomplete.js";
 
 class InputSearch {
@@ -34,7 +32,7 @@ class InputSearch {
     i = 0
 
     constructor(element) {
-        console.log(element)
+
         this.#input_search = $(element);
 
         if (this.#input_search.length === 0) throw new Error("Input #Input-Search manquant !");
@@ -86,7 +84,7 @@ class InputSearch {
     async #run() {
         // fichier Json chargé dans son intégralité
         // TODO Modifier pour le chargement partiel / bd
-        let items = await this.#ajax.loadData();
+        let items = await this.#ajax.run();
 
         this.#addEventListener(items);
 
