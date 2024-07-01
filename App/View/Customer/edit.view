@@ -1,7 +1,13 @@
 <header>
-    <h1></h1>
+    <h1><?= $title ?></h1>
 </header>
-<form id="Customer" action="/edit/client" method="post">
+<div id="Search" class="<?= (isset($action) && $action === 'editer')? '' : 'hidden' ?>">
+    <label for="Search-Edit">Recherche par :</label>
+    <div>
+        <input id="Search-Edit" type="text" name="customer" placeholder="nom et/ou prénom" data-search='{"end_point": "ajax.customers.list", "items": ["last_name","first_name"]}'>
+    </div>
+</div>
+<form id="Customer" class="edit <?= (isset($action) && $action === 'editer')? 'hidden' : '' ?>" action="/edit/client" method="post">
     <div class="last-name">
         <label for="LastName">Nom :</label>
         <input id="LastName" type="text" name="last_name">

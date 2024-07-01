@@ -50,18 +50,18 @@ class App
             ['page'     => '[0-9]+',
              'per_page' => '[0-9]+']);
 
-        self::$_Router->get('customer_search', '/recherche/client', [Controller\Customer::class, 'search']);
-        self::$_Router->post('customer_search', '/recherche/client', [Controller\Customer::class, 'search']);
+        self::$_Router->get('customer_search', '/rechercher/client', [Controller\Customer::class, 'search']);
 
-        self::$_Router->get('customer_add', '/edit/client', [Controller\Customer::class, 'edit']);
-        self::$_Router->get('customer_edit', '/edit/client/{id}', [Controller\Customer::class,
-                                                                   'edit'], ['id' => '[0-9]+']);
-        self::$_Router->post('customer_add', '/edit/client', [Controller\Customer::class, 'edit']);
-        self::$_Router->post('customer_edit', '/edit/client/{id}', [Controller\Customer::class,
+        self::$_Router->get('customer_add', '/nouveau/client', [Controller\Customer::class, 'add']);
+
+        self::$_Router->get('customer_edit', '/modifier/client', [Controller\Customer::class, 'edit']);
+        self::$_Router->post('customer_edit', '/modifier/client/{id}', [Controller\Customer::class,
                                                                     'edit'], ['id' => '[0-9]+']);
 
-        self::$_Router->get('customer_delete', '/client/delete', [Controller\Customer::class, 'delete']);
-        self::$_Router->post('customer_delete', '/client/delete', [Controller\Customer::class, 'delete']);
+        self::$_Router->get('customer_delete', '/supprimer/client', [Controller\Customer::class, 'delete']);
+        self::$_Router->post('customer_delete', '/supprimer/client', [Controller\Customer::class, 'delete']);
+
+        self::$_Router->get('customers_all', '/ajax/customers/list', [Controller\Customer::class, 'getAll']);
 
         try {
             $route = self::$_Router->resolve($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);

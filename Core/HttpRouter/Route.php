@@ -69,6 +69,7 @@ class Route
         $url = trim($path, '/');
         $path = preg_replace_callback('#{([\w]+)}#', [$this, 'paramsMatch'], $this->path);
         $reg = "#^$path$#i";
+
         $result = preg_match($reg, $url, $matches);
 
         if (!empty($matches)) $this->setParams($matches);

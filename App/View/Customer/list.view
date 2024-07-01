@@ -1,7 +1,7 @@
 <header class="customers">
     <h1>Liste des clients</h1>
 </header>
-<table class="customers"  data-url="ajax/customers-paginate" data-paginate="10">
+<table class="customers"  data-url="ajax/customers-paginate" data-paginate>
     <thead>
     <tr>
         <th class="id">Identifiant</th>

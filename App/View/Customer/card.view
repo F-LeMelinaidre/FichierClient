@@ -1,0 +1,31 @@
+<header>
+    <h1><?= $title ?></h1>
+</header>
+<div id="Search" class="last-name">
+    <label for="Input-Search">Recherche par :</label>
+    <div>
+        <input id="Search-Name" type="text" name="customer" placeholder="nom et/ou prénom" data-search='{"end_point": "ajax.customers.list", "items": ["last_name","first_name"]}'>
+    </div>
+    <?php if($action === 'search'): ?>
+    <label for="Input-Search">Recherche par :</label>
+    <div>
+        <input id="Search-Id" type="text" name="customer" placeholder="nom et/ou prénom" data-search='{"end_point": "ajax.customers.list", "items": ["id"]}'>
+    </div>
+    <?php endif; ?>
+</div>
+<div id="Card" class="customer hidden">
+    <header>
+        <h2 class="fullname"></h2>
+        <p class="id">Identifiant : <span></span></p>
+    </header>
+
+    <p class="phone">Téléphone : <span></span></p>
+    <address>
+        <div class="address">Adresse : <span></span></div>
+        <div class="zip">Code postal : <span></span></div>
+        <div class="city">Ville : <span></span></div>
+    </address>
+    <?php if($action === 'delete'): ?>
+        <button class="btn">Supprimer</button>
+    <?php endif; ?>
+</div>
