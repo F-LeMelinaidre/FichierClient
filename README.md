@@ -8,12 +8,11 @@
 ## Installation
 
 1. **Décompression de l'archive**:
-   - Décompressez l'archive `FichierClient` à la racine du dossier `www` de votre serveur web.
+   - Décompressez l'archive `FichierClient` à la racine du dossier `www` de votre serveur web. 
+   - .htaccess configuré pour la reécriture d'url
 
 2. **Installation de Composer**:
-   - Assurez-vous que l'autoloader de Composer est requis dans votre projet.
-   - Si ce n'est pas déjà fait, exécutez la commande suivante à la racine de votre projet pour installer les dépendances Composer et générer l'autoloader:
-     ```bash
+   - L'autoloader de Composer est requis dans votre projet.
      composer install
      ```
 
