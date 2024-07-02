@@ -9,7 +9,7 @@
 
 1. **Décompression de l'archive**:
    - Décompressez l'archive `FichierClient` à la racine du dossier `www` de votre serveur web. 
-   - Créer un alias 
+   - Créer un Virtual Host
    - .htaccess configuré pour la reécriture d'url
 
 2. **Installation de Composer**:
